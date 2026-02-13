@@ -1,0 +1,48 @@
+CODE:
+
+class Solution {
+
+public:
+    void rotate(vector<int>& nums, int k) {
+        int n=nums.size();
+        vector<int>temp(n,0);
+        k=k%n; // so that line 7 will not give run time error in case of k>n
+        int new_start=n-k;
+        int i=0;
+        for(int j=new_start;j<n;j++){
+            temp[i]=nums[j];
+            i++;
+        }
+
+        for(int j=0;j<new_start;j++){
+            temp[i]=nums[j];
+            i++;
+        }
+        nums.clear();
+        nums.assign(temp.begin(),temp.end());
+    }
+};
+
+---------------------------------------------------------------------------------------------------------
+space complexity=O(1)
+give RUN TIME ERROR
+CODE:
+class Solution {
+public:
+    void rotate(vector<int>& nums, int k) {
+        int n=nums.size();
+        while(k--){
+            int j=n-1;
+            int i=n-2;
+            int temp=nums[n-1];
+            while(i>=0){
+                nums[j]=nums[i];
+                i--;
+                j--;
+            }
+            nums[0]=temp;
+        }
+        
+    }
+};
+
