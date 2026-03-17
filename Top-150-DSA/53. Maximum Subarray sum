@@ -1,0 +1,61 @@
+O(nlogn): using divide and conquere:
+SOLUTION:
+class Solution {
+public:
+    
+    int help(vector<int>& nums,int l, int m, int h){
+        int sum=0;
+        int leftsum=INT_MIN;
+        for(int i=m;i>=l;i--){
+            sum+=nums[i];
+            leftsum=max(leftsum,sum);
+        }
+
+        sum=0;
+        int rightsum=INT_MIN;
+        for(int i=m+1;i<=h;i++){
+            sum+=nums[i];
+            rightsum=max(rightsum,sum);
+        }
+        return leftsum + rightsum;
+    }
+
+
+    int solve(vector<int>& nums, int l, int h){
+        if(l==h) return nums[l];
+        int mid=(l+h)/2;
+
+        int LSS=solve(nums,l,mid);
+        int RSS=solve(nums,mid+1,h);
+        int crossSS=help(nums,l,mid,h);
+        return (max(max(LSS,RSS),crossSS));
+    }
+
+    int maxSubArray(vector<int>& nums) {
+        int n=nums.size();
+        return solve(nums,0,n-1);
+    }
+};
+------------------------------------------------------------------------------------------------------------------------------
+appraoch 2: kadanes algo O(n)
+SOLUTION:
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        int n=nums.size();
+        int maxi=INT_MIN;
+        int sum=0;
+        for(int i=0;i<n;i++){
+            sum+=nums[i];
+            if(sum>maxi){
+                maxi=sum;
+            }
+            if(sum<0){
+                sum=0;
+            }
+
+
+        }
+        return maxi;
+    }
+};
