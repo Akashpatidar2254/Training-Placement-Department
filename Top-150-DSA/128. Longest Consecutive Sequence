@@ -1,0 +1,36 @@
+// using min heap in O(N)
+class Solution {
+public:
+    int longestConsecutive(vector<int>& nums) {
+        if(nums.size()==0) return 0;
+        priority_queue <int,vector<int>, greater<int>>mh;
+        int n=nums.size();
+        for(int i=0;i<n;i++){
+            mh.push(nums[i]);
+        }
+        int prev=mh.top();
+        int count=1;
+        int max_count=1;
+        mh.pop();
+        while(!mh.empty()){
+            if(prev==mh.top()){
+                mh.pop();
+            }
+            else if ( prev+1==mh.top()){
+                
+                count++;
+                max_count=max(max_count,count);
+                prev=mh.top();
+                mh.pop();
+            }
+            else{
+                max_count=max(max_count,count);
+                count=1;
+                prev=mh.top();
+                mh.pop();
+            }
+
+        }
+        return max_count;
+    }
+};
