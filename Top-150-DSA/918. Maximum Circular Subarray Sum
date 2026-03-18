@@ -1,0 +1,44 @@
+//use of kadanes(optimal): O(N)
+class Solution {
+public:
+
+    int kadanes_max(vector<int>& arr){
+        int sum = arr[0];
+        int max_sum = arr[0];
+
+        for(int i = 1; i < arr.size(); i++){
+            sum = max(sum+arr[i],arr[i]);
+            max_sum = max(max_sum, sum);
+        }
+        return max_sum;
+    }
+
+
+    int kadanes_min(vector<int>& arr){
+        int sum = arr[0];
+        int min_sum = arr[0];
+
+        for(int i = 1; i < arr.size(); i++){
+            sum = min(sum+arr[i],arr[i]);
+            min_sum = min(min_sum, sum);
+        }
+        return min_sum;
+    }
+
+    int maxSubarraySumCircular(vector<int>& nums) {
+        int n = nums.size();
+        int total=nums[0];
+        for(int i=1;i<n;i++){
+            total+=nums[i];
+        }
+        
+        int min_subarray=kadanes_min(nums);
+        int max_subarray=kadanes_max(nums);
+        int circular_sum=total-min_subarray; // totalsum-min subarray sum = maximum circular/non circular sub array sum
+
+        if(max_subarray>0) return max(circular_sum,max_subarray);
+        return max_subarray;
+
+       
+    }
+};
