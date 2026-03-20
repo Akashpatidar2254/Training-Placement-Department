@@ -1,0 +1,54 @@
+// prefix sum
+class Solution {
+public:
+    int numberOfSubmatrices(vector<vector<char>>& grid) {
+        int n=grid.size();
+        int m=grid[0].size();
+        vector<vector<int>> new_grid(n,vector<int>(m));
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(grid[i][j]=='X'){
+                    new_grid[i][j]=1;
+                }
+                if(grid[i][j]=='Y'){
+                    new_grid[i][j]=-1;
+                }
+                if(grid[i][j]=='.'){
+                    new_grid[i][j]=0;
+                }
+            }
+        }
+
+        vector<vector<pair<int,int>>> v(n,vector<pair<int,int>>(m));
+        int count=0;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                v[i][j].second=new_grid[i][j];
+                if(new_grid[i][j]==1){
+                    v[i][j].first=1;
+                }
+                else{
+                    v[i][j].first=0;
+                }
+                if(i-1>=0){
+                    v[i][j].first+=v[i-1][j].first;
+                    v[i][j].second+=v[i-1][j].second;
+                }
+                if(j-1>=0){
+                    v[i][j].first+=v[i][j-1].first;
+                     v[i][j].second+=v[i][j-1].second;
+                }
+                if(i-1>=0 && j-1>=0){
+                    v[i][j].first-=v[i-1][j-1].first;
+                    v[i][j].second-=v[i-1][j-1].second;
+                }
+
+              if(v[i][j].second == 0 && v[i][j].first > 0 ){
+                count++;
+              }
+            }
+        }
+    
+        return count;
+    }
+};
