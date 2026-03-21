@@ -1,0 +1,40 @@
+//O(n*n)
+class Solution {
+public:
+    int jump(vector<int>& nums) {
+        int n=nums.size();
+        if(n==1) return 0;
+        vector<bool> visited(n,false);
+        queue<int> que;
+
+        int start=1;
+        while(start<n && start<=nums[0]){
+            que.push(start);
+            visited[start]=true;
+            start++;
+        }
+       
+        int level=0;
+        while(!que.empty()){
+            int size=que.size();
+            while(size--){
+                int curr=que.front();
+                que.pop();
+                if(curr>nums.size()-1) continue;;
+                if(curr==nums.size()-1) return level+1;
+                int max_reach=curr+nums[curr];
+                int i=curr+1;
+                while(i<nums.size() && i<=max_reach){
+                    if(!visited[i]){
+                        que.push(i);
+                        visited[i]=true;
+                    }
+                    i++;
+                }
+            }
+            level++;
+            
+        }
+        return level;
+    }
+};
