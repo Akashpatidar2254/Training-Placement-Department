@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int romanToInt(string s) {
+        int n=s.size();
+        unordered_map<char,int> dic;
+        dic['I']=1;
+        dic['V']=5;
+        dic['X']=10;
+        dic['L']=50;
+        dic['C']=100;
+        dic['D']=500;
+        dic['M']=1000;
+        
+        int prev=dic[s[0]];
+        int ans=prev;
+        for(int i=1;i<n;i++){
+            
+            if(dic[s[i]]<=prev){
+                ans+=dic[s[i]];
+                prev=dic[s[i]];
+            }
+            else{
+                ans+=dic[s[i]]-2*prev;
+                prev=dic[s[i]];
+            }
+
+
+        }
+
+        return ans;
+    }
+};
