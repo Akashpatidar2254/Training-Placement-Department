@@ -1,0 +1,38 @@
+class Solution {
+public:
+    string reverseWords(string s) {
+        int n = s.size();
+        stack<string> stk;
+        string word = "";
+
+        for(int i = 0; i < n; i++){
+            if(s[i] != ' '){
+                word.push_back(s[i]);
+            } 
+            else {
+                if(!word.empty()){   // avoid pushing empty words
+                    stk.push(word);
+                    word = "";
+                }
+            }
+        }
+
+        // push last word if exists
+        if(!word.empty()){
+            stk.push(word);
+        }
+
+        string result = "";
+
+        while(!stk.empty()){
+            result += stk.top();
+            stk.pop();
+
+            if(!stk.empty()){  // avoid trailing space
+                result += " ";
+            }
+        }
+
+        return result;
+    }
+};
